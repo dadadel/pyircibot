@@ -52,12 +52,12 @@ You can also provide a class using `use_parser_class()` like it is done the the 
 
 - Parameters
 
-The available parameters of PyIrciBot are:
+The available parameters of PyIrciBot are::
 
-    `server`: the IRC server to connect (mandatory)
-    `channel`: a channel join
-    `nick`: a nickname. if not given, a nickname will be generated
+    server: the IRC server to connect (mandatory)
+    channel: a channel join
+    nick: a nickname. if not given, a nickname will be generated
             with 5 random hexa digits like 'pyircibot_5fa8b'
-    `port`: the port to connect to the server
-    `parser_class`: the user class (as provided in testbot.py)
+    port: the port to connect to the server
+    parser_class: the user class (as provided in testbot.py)
 

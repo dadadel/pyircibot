@@ -127,7 +127,6 @@ class PyIrciBot(object):
         m = "MODE "+ str(self.nick) + ' ' + mode + "\n"
         self.irc.send(m)
         self.irc.send("PRIVMSG " + self.channel + "==>>" + m)
-        print ("PyIrciBot: " + "sent: " + m)
 
     def message(self, message, target):
         '''Send a message to a target that can be a user or a channel.
@@ -136,8 +135,11 @@ class PyIrciBot(object):
         @param target: the target
         
         '''
-        self.irc.send("PRIVMSG " + target + " :" + message + '\n')
-        print ("PRIVMSG " + target + " : " + message)
+        if '\n' in message:
+            for msg in message.split('\n'):
+            self.irc.send("PRIVMSG " + target + " :" + msg + '\n')
+        else:
+            self.irc.send("PRIVMSG " + target + " :" + message + '\n')
 
     def run(self, parse_message=None, parse_raw_data=None):
         '''Run in an infinit loop receiving irc messages and responding to PINGs. 

@@ -137,7 +137,7 @@ class PyIrciBot(object):
         '''
         if '\n' in message:
             for msg in message.split('\n'):
-            self.irc.send("PRIVMSG " + target + " :" + msg + '\n')
+                self.irc.send("PRIVMSG " + target + " :" + msg + '\n')
         else:
             self.irc.send("PRIVMSG " + target + " :" + message + '\n')
 

@@ -28,6 +28,7 @@ class PyIrciBot(object):
                 -'message': send a message stored in value to the
                     value of the key 'target' if exists else to the channel
                 -'nick': change nickname to the value
+                -'join': join the provided channel in value
                 -'send': send a raw IRC command stored in value
     Note that all your functions should not be blocking as it run in the same thread.
 
@@ -221,6 +222,7 @@ class PyIrciBot(object):
                     #               key 'target' exists else to the channel
                     #  - 'nick': change nickname to the provided one
                     #  - 'send': send the provided raw irc command
+                    #  - 'join': join the provided channel
                     #  - 'end': will stop the bot. the provided value is ignored
                     #
                     elif type(res['cmd']) is dict:
@@ -239,6 +241,8 @@ class PyIrciBot(object):
                                 self.parser_obj.set_nick(res['cmd']['nick'])
                         if 'send' in res['cmd']:
                             self.irc.send(res['cmd']['send'] + '\n')
+                        if 'join' in res['cmd']:
+                            self.join(res['cmd']['join'])
                         if 'end' in res['cmd']:
                             running = False
             elif res == 'end':

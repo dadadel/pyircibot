@@ -39,8 +39,8 @@ messages posted to chan or addressed to the bot:
 
     from pyircibot import PyIrciBot
     def parse(message, source, target):
-        print ('{} wrote to {} the message: {}'.format(source, source, target))
-        return {'cmd': {'message': '{} wrote to {} the message: {}'.format(source, source, target)}}
+        print ('{} wrote to {} the message: {}'.format(source, target, message))
+        return {'cmd': {'message': '{} wrote to {} the message: {}'.format(source, target, message)}}
     bot = PyIrciBot("irc.server.org", "#channel")
     bot.connect()
     bot.run(parse_message=parse)

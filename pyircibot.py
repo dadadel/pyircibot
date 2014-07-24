@@ -34,7 +34,7 @@ class PyIrciBot(object):
 
     '''
 
-    def __init__(self, server, channel=None, nick=None, port=6667, ssl=False, parser_class=None):
+    def __init__(self, server, channel=None, nick=None, port=6667, ssl=False):
         '''Initializes data
 
         @param server: the IRC server to connect
@@ -43,7 +43,6 @@ class PyIrciBot(object):
         with 5 random hexa digits like 'pyircibot_5fa8b'
         @param port: the port to connect to the server
         @param ssl: use or not SSL
-        @param parser_class: the parser class
 
         '''
         self.server = server
@@ -56,19 +55,19 @@ class PyIrciBot(object):
             self.nick = nick
         self.port = port
         self.ssl = ssl
-        self.parser_class = parser_class
         self.parser_obj = None
         self.timeout_use_class = False
         self.timeout_function = None
 
-    def use_parser_class(self, pclass):
+    def use_parser_class(self, pclass, *args, **kwargs):
         '''Sets a parser class and instantiate it. It will be used to parse and proceed IRC data.
 
-        @param pclass: the parser class
+        @param pclass: the parser class that will be instantiated adding at least nick and channel parameters
+        @param *args: other pclass parameters to add for instantiation
+        @param *kwargs: other pclass parameters to add for instantiation
 
         '''
-        self.parser_class = pclass
-        self.parser_obj = pclass(nick=self.nick, channel=self.channel)
+        self.parser_obj = pclass(nick=self.nick, channel=self.channel, *args, **kwargs)
 
     def connect(self, timeout_function=None, timeout_use_class=False, timeout=1):
         '''Connects to the IRC server. If a channel was set, then it will join it.

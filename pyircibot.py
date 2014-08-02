@@ -2,8 +2,7 @@
 
 import socket
 import random
-
-#TODO: manage ssl
+import ssl
 
 
 class PyIrciBot(object):
@@ -91,6 +90,9 @@ class PyIrciBot(object):
         '''
         self.irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         print ("connecting to:"+self.server)
+        if self.ssl:
+            self.irc = ssl.wrap_socket(self.irc, cert_reqs=ssl.CERT_NONE)
+            print("using SSL")
         self.irc.connect((self.server, self.port))
         if timeout_function or timeout_use_class:
             self.irc.settimeout(timeout)
@@ -163,7 +165,7 @@ class PyIrciBot(object):
                 text = self.irc.recv(2048)
 
             # if non blocking and reached timeout run user callback function
-            except socket.timeout, e:
+            except (socket.timeout, ssl.SSLError) as e:
                 result = None
                 if self.timeout_function:
                     try:
